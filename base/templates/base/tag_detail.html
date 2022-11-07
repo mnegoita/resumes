@@ -1,0 +1,358 @@
+{% extends 'base/base.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block head_title %}
+    {{ object }} 
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+    <div class="row">
+        <div class="col-8">           
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }} </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                </ol>
+            </div>            
+        </div>
+        <div class="col-4">           
+            <div class="page-buttons text-right">                
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>     
+</section>
+
+<section class="page-heading">
+    <div class="row">    
+        <div class="col">
+            <h1> {{ object }}  </h1>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">    
+    <div class="row mt-4"> 
+        <div class="col-8 offset-2">
+            {% if  tag_jobpositions %} 
+                <div class="row">    
+                    <div class="col">
+                        <h2 class="text-center"> Job Positions  </h2>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        {% for item in tag_jobpositions %}                            
+                            <div class="row mt-2">
+                                <div class="col-8">                            
+                                    <h3 class="cat-item-title"> <a href="{{ item.get_absolute_url }}"> {{ item.title }}</a> </h3>
+                                    <div class="cat-item-meta">
+                                        <ul>
+                                            <li class="d-flex align-items-center"> {{ item.company }} </li>
+                                            <li class="d-flex align-items-center"> {{ item.job_type }} </li>
+                                            <li class="d-flex align-items-center"> {{ item.location }} </li>
+                                        </ul>
+                                    </div>                            
+                                </div>
+                                <div class="col-4">                                  
+                                    {% if item.category %}            
+                                    <a href="{{ item.category.get_absolute_url }}">
+                                        <span class="badge badge-cat">{{ item.category.name }}</span>
+                                    </a>
+                                    {% endif %}
+                                    
+                                    {% if item.tags %}
+                                        {% for tag in item.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}">
+                                            <span class="badge badge-tag">{{ tag.name }}</span>
+                                        </a>
+                                        {% endfor %}
+                                    {% endif %}                                   
+                                </div> 
+                            </div>                            
+                        {% endfor %}                   
+                    </div>
+                </div>               
+                <div class="row mt-4">
+                    <div class="col">
+                        <ul class="pagination justify-content-center">
+                            {% if tag_jobpositions.has_previous %}
+                                <li><a href="?page1={{ tag_jobpositions.previous_page_number }}"><i class="icofont-rounded-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-left"></i></a></li> 
+                            {% endif %}
+
+                            {% if tag_jobpositions.number|add:'-4' > 1 %}
+                                <li><a href="?page1={{ tag_jobpositions.number|add:'-5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% for i in tag_jobpositions.paginator.page_range %}                                
+                                {% if tag_jobpositions.paginator.num_pages < 2 %}                                   
+                                    <li hidden><a href="#">{{ i }}</a></li>                            
+                                {% elif tag_jobpositions.number == i %}
+                                    <li class="active"><a href="#">{{ i }}</a></li>
+                                {% elif i > tag_jobpositions.number|add:'-5' and i < tag_jobpositions.number|add:'5' %}
+                                    <li><a href="?page1={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if tag_jobpositions.paginator.num_pages > tag_jobpositions.number|add:'4' %}
+                                <li><a href="?page1={{ tag_jobpositions.number|add:'5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% if tag_jobpositions.has_next %}
+                                <li><a href="?page1={{ tag_jobpositions.next_page_number }}"><i class="icofont-rounded-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-right"></i></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>             
+            {% endif %}
+            
+        </div>        
+    </div>
+
+    <div class="row mt-4"> 
+        <div class="col-8 offset-2">
+            {% if  tag_resumes %} 
+                <div class="row">    
+                    <div class="col">
+                        <h2 class="text-center"> Resumes  </h2>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        {% for item in tag_resumes %}                            
+                            <div class="row mt-2">
+                                <div class="col-8">                            
+                                    <h3 class="cat-item-title"> <a href="{{ item.get_absolute_url }}"> {{ item.title }}</a> </h3>
+                                    <div class="cat-item-meta">
+                                        <ul>
+                                            <li class="d-flex align-items-center"> Date Created: {{ item.date_created }} </li>
+                                            <li class="d-flex align-items-center"> 
+                                                {% if item.description %}
+                                                {{ item.description }} 
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>                            
+                                </div>
+                                <div class="col-4"> 
+                                    {% if item.tags %}
+                                        {% for tag in item.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}">
+                                            <span class="badge badge-tag">{{ tag.name }}</span>
+                                        </a>
+                                        {% endfor %}
+                                    {% endif %}                                    
+                                </div> 
+                            </div>                            
+                        {% endfor %}                   
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <ul class="pagination justify-content-center">
+                            {% if tag_resumes.has_previous %}
+                                <li><a href="?page2={{ tag_resumes.previous_page_number }}"><i class="icofont-rounded-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-left"></i></a></li> 
+                            {% endif %}
+
+                            {% if tag_resumes.number|add:'-4' > 1 %}
+                                <li><a href="?page2={{ tag_resumes.number|add:'-5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% for i in tag_resumes.paginator.page_range %}                                
+                                {% if tag_resumes.paginator.num_pages < 2 %}                                   
+                                    <li hidden><a href="#">{{ i }}</a></li>                            
+                                {% elif tag_resumes.number == i %}
+                                    <li class="active"><a href="#">{{ i }}</a></li>
+                                {% elif i > tag_resumes.number|add:'-5' and i < tag_resumes.number|add:'5' %}
+                                    <li><a href="?page2={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if tag_resumes.paginator.num_pages > tag_resumes.number|add:'4' %}
+                                <li><a href="?page2={{ tag_resumes.number|add:'5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% if tag_resumes.has_next %}
+                                <li><a href="?page2={{ tag_resumes.next_page_number }}"><i class="icofont-rounded-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-right"></i></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>                
+            {% endif %}
+            
+        </div>        
+    </div>
+
+    <div class="row mt-4"> 
+        <div class="col-8 offset-2">
+            {% if  tag_interviews %} 
+                <div class="row">    
+                    <div class="col">
+                        <h2 class="text-center"> Interviews  </h2>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        {% for item in tag_interviews %}                            
+                            <div class="row mt-2">
+                                <div class="col-8">                            
+                                    <h3 class="cat-item-title"> <a href="{{ item.get_absolute_url }}"> {{ item.title }}</a> </h3>
+                                    <div class="cat-item-meta">
+                                        <ul>
+                                            <li class="d-flex align-items-center"> Date Scheduled:  {{ item.date_sch }} </li>
+                                        </ul>
+                                    </div>                            
+                                </div>
+                                <div class="col-4"> 
+                                    {% if item.tags %}
+                                        {% for tag in item.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}">
+                                            <span class="badge badge-tag">{{ tag.name }}</span>
+                                        </a>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br />    
+                                </div> 
+                            </div>                             
+                        {% endfor %}                   
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <ul class="pagination justify-content-center">
+                            {% if tag_interviews.has_previous %}
+                                <li><a href="?page3={{ tag_interviews.previous_page_number }}"><i class="icofont-rounded-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-left"></i></a></li> 
+                            {% endif %}
+
+                            {% if tag_interviews.number|add:'-4' > 1 %}
+                                <li><a href="?page3={{ tag_interviews.number|add:'-5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% for i in tag_interviews.paginator.page_range %}                                
+                                {% if tag_interviews.paginator.num_pages < 2 %}                                   
+                                    <li hidden><a href="#">{{ i }}</a></li>                            
+                                {% elif tag_interviews.number == i %}
+                                    <li class="active"><a href="#">{{ i }}</a></li>
+                                {% elif i > tag_interviews.number|add:'-5' and i < tag_interviews.number|add:'5' %}
+                                    <li><a href="?page3={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if tag_interviews.paginator.num_pages > tag_interviews.number|add:'4' %}
+                                <li><a href="?page3={{ tag_interviews.number|add:'5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% if tag_interviews.has_next %}
+                                <li><a href="?page3={{ tag_interviews.next_page_number }}"><i class="icofont-rounded-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-right"></i></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>                
+            {% endif %}
+            
+        </div>        
+    </div>
+
+    <div class="row mt-4 mb-4"> 
+        <div class="col-8 offset-2">
+            {% if  tag_companies %} 
+                <div class="row">    
+                    <div class="col">
+                        <h2 class="text-center"> Companies  </h2>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        {% for item in tag_companies %}                            
+                            <div class="row mt-2">
+                                <div class="col-8">                            
+                                    <h3 class="cat-item-title"> <a href="{{ item.get_absolute_url }}"> {{ item.name }}</a> </h3>
+                                    <div class="cat-item-meta">
+                                        <ul>
+                                            <li class="d-flex align-items-center"> 
+                                                Website: <a href="{{ item.website }}" target="_blank"> {{ item.name }} </a> 
+                                            </li>
+                                        </ul>
+                                    </div>                            
+                                </div>
+                                <div class="col-4">  
+                                    {% if item.tags %}
+                                        {% for tag in item.tags.all %}
+                                        <a href="{{ tag.get_absolute_url }}">
+                                            <span class="badge badge-tag">{{ tag.name }}</span>
+                                        </a>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br />    
+                                </div> 
+                            </div>                             
+                        {% endfor %}                   
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col">
+                        <ul class="pagination justify-content-center">
+                            {% if tag_companies.has_previous %}
+                                <li><a href="?page4={{ tag_companies.previous_page_number }}"><i class="icofont-rounded-left"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-left"></i></a></li> 
+                            {% endif %}
+
+                            {% if tag_companies.number|add:'-4' > 1 %}
+                                <li><a href="?page4={{ tag_companies.number|add:'-5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% for i in tag_companies.paginator.page_range %}                                
+                                {% if tag_companies.paginator.num_pages < 2 %}                                   
+                                    <li hidden><a href="#">{{ i }}</a></li>                            
+                                {% elif tag_companies.number == i %}
+                                    <li class="active"><a href="#">{{ i }}</a></li>
+                                {% elif i > tag_companies.number|add:'-5' and i < tag_companies.number|add:'5' %}
+                                    <li><a href="?page4={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if tag_companies.paginator.num_pages > tag_companies.number|add:'4' %}
+                                <li><a href="?page4={{ tag_companies.number|add:'5' }}">&hellip;</a></li>
+                            {% endif %}
+
+                            {% if tag_companies.has_next %}
+                                <li><a href="?page4={{ tag_companies.next_page_number }}"><i class="icofont-rounded-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><i class="icofont-rounded-right"></i></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+

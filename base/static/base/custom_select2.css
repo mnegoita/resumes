@@ -1,0 +1,13 @@
+/*--------------------------------------------------------------
+# select2 styling 
+--------------------------------------------------------------*/
+
+span.select2-selection--multiple {
+    border-color: #ced4da !important;   
+}
+
+span.select2-selection {
+    border-color: #ced4da !important;   
+}
+
+

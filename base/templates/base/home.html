@@ -1,0 +1,120 @@
+{% extends 'base/base.html' %}
+
+
+{% block head_title %}
+    Home  
+{% endblock %} 
+
+
+{% block content %}
+
+<section class="page-content">
+    <div class="row pt-4">
+        <div class="col-lg-10 col-md-10 offset-1 mt-4">
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">                    
+                    <a href="{% url 'resumes:jobposition_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> 
+                                        Job Positions
+                                    </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_jobpositions }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'resumes:resume_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> Resumes </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_resumes }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a> 
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'resumes:interview_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> Interviews </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_interviews }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>    
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">
+                    <a href="{% url 'resumes:company_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> Companies </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_companies }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'resumes:jobtype_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> Job Types </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_jobtypes }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a> 
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'resumes:location_list' %}">
+                        <div class="card card-home">
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h2 class="card-title text-center"> Locations </h2>
+                                </div>
+                                <div class="text-center">
+                                    <val> {{ user_locations }} </val>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

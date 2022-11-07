@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+{% load custom_filters %}
+{% load buttons %}
+
+
+{% block head_title %}
+    {{ object }} 
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+    <div class="row">
+        <div class="col-8">            
+            <div class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{% list_view_url object %}"> {{ object|verbose_name_plural }} </a></li>
+                    <li><a href="#"> {{ object }} </a></li>
+                </ol>
+            </div>            
+        </div>
+        <div class="col-4">            
+            <div class="page-buttons text-right">                
+                {% edit_button object %}
+                {% delete_button object %}
+            </div>            
+        </div>
+    </div>     
+</section>
+
+<section class="page-heading">
+    <div class="row mt-4">
+        <div class="col text-center">
+            <h1> {{ object }} </h1> 
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+
+    <div class="row mt-4 mb-4">
+        <div class="col col-sm-12 col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Job Position Details </strong>
+                </div>
+                <table class="table table-sm card-body">
+                    <tr>
+                        <td> Title </td>
+                        <td> {{ object.title }}</td> 
+                    </tr>
+                    <tr>
+                        <td> Company </td>
+                        <td> <a href="{{ object.company.get_absolute_url }}"> {{ object.company }} </a> </td>
+                    </tr>
+                    <tr>
+                        <td> Location </td>
+                        <td> <a href="{{ object.location.get_absolute_url }}"> {{ object.location }} </a> </td>
+                    </tr>                
+                    <tr>
+                        <td> Job Type </td>
+                        <td> <a href="{{ object.job_type.get_absolute_url }}"> {{ object.job_type }} </a> </td>
+                    </tr>
+                    <tr>
+                        <td> Salary </td>
+                        <td> {{ object.salary|placeholder }} </td> 
+                    </tr>
+                    <tr>
+                        <td> Date Found </td>
+                        <td> {{ object.date_found|placeholder }} </td> 
+                    </tr>
+                    <tr>
+                        <td> Date applied </td>
+                        <td> {{ object.date_applied|placeholder }} </td> 
+                    </tr>
+                    <tr>
+                        <td> Resume Sent </td>
+                        <td> <a href="{{ object.resume_sent.get_absolute_url }}"> {{ object.resume_sent|placeholder }} </a> </td>
+                    </tr>
+                    <tr>
+                        <td> Interviews</td>
+                        
+                        <td>
+                        {% if jobposition.interview_set.all %}
+                            {% for item in jobposition.interview_set.all %}
+                                <a href="{{ item.get_absolute_url }}">{{ item }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted">&mdash;</span>
+                        {% endif %}
+                        
+                        </td> 
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-header">
+                    <strong> Category and Tags </strong>
+                </div>            
+                <table class="table table-sm card-body">         
+                    <tr>
+                        <td> Category </td>
+                        <td> 
+                            {% if object.category %}
+                                <a href="{{ object.category.get_absolute_url }}">
+                                    <span class="badge badge-cat">{{ object.category.name }}</span>
+                                </a>
+                            {% else %}
+                                <span class="text-muted">&mdash;</span>
+                            {% endif %}
+                        </td> 
+                    </tr>                
+                    <tr>
+                        <td> Tags </td>
+                        <td> 
+                            {% if object.tags.all %}
+                                {% for tag in object.tags.all %}
+                                    <a href="{{ tag.get_absolute_url }}">
+                                        <span class="badge badge-tag">{{ tag.name }}</span>
+                                    </a>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted">&mdash;</span>
+                            {% endif %} 
+                        </td> 
+                    </tr>                                      
+                </table>            
+            </div>        
+        </div>
+
+        <div class="col col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Job Position Content and Notes </strong>
+                </div>
+                <div class="card-body">         
+                        {{ object.content|safe }}                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

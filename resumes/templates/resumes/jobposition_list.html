@@ -1,0 +1,112 @@
+{% extends 'base/base_datatables.html' %}
+{% load custom_filters %}
+{% load buttons %}
+{% load static %}
+
+
+{% block head_title %}
+    {{ model|verbose_name_plural }}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+    
+    <div class="row">            
+        <div class="col">            
+            <div class="page-buttons text-right">
+                {% add_button app_name obj_name %}
+            </div>            
+        </div>
+    </div> 
+
+</section>
+
+<section class="page-heading">
+    <div class="row">    
+        <div class="col text-center">
+            <h3> {{ model|verbose_name_plural }}  </h3>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+
+    {% if user_job_positions_ca %}
+        <div class="row mt-4 mb-4">
+            <div class="col"> 
+            <h4 class="text-center"> Job Positions CA </h4>        
+                <table class="table table-sm resumesTable compact responsive">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Job Type</th>
+                            <th>Salary</th>
+                            <th>Date Found</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in user_job_positions_ca %}
+                        <tr>
+                            <td><a href="{{ item.get_absolute_url }}"> {{ item.title }} </a></td>
+                            <td><a href="{{ item.company.get_absolute_url }}"> {{ item.company }} </a></td>
+                            <td><a href="{{ item.location.get_absolute_url }}"> {{ item.location }} </a></td>
+                            <td><a href="{{ item.job_type.get_absolute_url }}"> {{ item.job_type }} </a></td>
+                            <td>{{ item.salary|placeholder }}</td>
+                            <td>{{ item.date_found|placeholder }}</td>
+                        </tr>                        
+                        {% endfor %}
+                    </tbody>
+                </table>            
+            </div>
+        </div>
+
+        {% if user_job_positions_us %}    
+        
+        <div class="row mt-4 mb-4">
+            <div class="col"> 
+            <h4 class="text-center"> Job Positions US </h4>        
+                <table class="table table-sm resumesTable compact responsive">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Job Type</th>
+                            <th>Salary</th>
+                            <th>Date Found</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in user_job_positions_us %}
+                        <tr>
+                            <td><a href="{{ item.get_absolute_url }}"> {{ item.title }} </a></td>
+                            <td><a href="{{ item.company.get_absolute_url }}"> {{ item.company }} </a></td>
+                            <td><a href="{{ item.location.get_absolute_url }}"> {{ item.location }} </a></td>
+                            <td><a href="{{ item.job_type.get_absolute_url }}"> {{ item.job_type }} </a></td>
+                            <td>{{ item.salary|placeholder }}</td>
+                            <td>{{ item.date_found|placeholder }}</td>
+                        </tr>                        
+                        {% endfor %}
+                    </tbody>
+                </table>            
+            </div>
+        </div> 
+
+        {% endif %}
+
+    {% else %}
+    <div class="row mt-4">
+        <div class="col text-center">
+            <p> No Job Positions saved yet.</p>
+        </div>
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}
+

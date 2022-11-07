@@ -1,0 +1,132 @@
+{% extends 'base/base_form_popup.html' %}
+
+
+{% block head_title %}
+    {% if object.pk %} Edit {{ object }} 
+    {% else %} Add a new {{ obj_type }} 
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">  
+
+    <section class="page-heading">
+        <div class="row">    
+            <div class="col text-center">
+                <h2> 
+                    {% if object.pk %} 
+                        Editing {{ obj_type }} {{ object }} 
+                    {% else %} 
+                        Add a new {{ obj_type|title }} 
+                    {% endif %}
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    {% if form.non_field_errors %}
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card text-white bg-danger">
+                    <div class="card-header">
+                        <strong>Errors</strong>
+                    </div>
+                    <div class="card-body">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+            </div>
+        </div>    
+    {% endif %}
+
+    {% if popup %} 
+        <input type="hidden" name="_popup" value="1">  
+    {% endif %}
+
+    <section class="page-content">
+
+        {% csrf_token %}
+    
+        {% for field in form.hidden_fields %}
+            {{ field }}
+        {% endfor %}
+    
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>{{ obj_type|title }} Details</strong>
+                    </div>
+
+                    <div class="card-body">     
+                        <div class="form-row align-items-center">
+                            <div class="col-4">
+                                <label for="{{ form.name.id_for_label }}" class="col-form-label"> Name </label>
+                            </div>
+                            <div class="col">
+                                {% if form.name.errors %}                
+                                    {% for error in form.name.errors %}
+                                        <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                    {% endfor %}                
+                                {% endif %}
+                                {{ form.name }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-row  mt-2 align-items-center">
+                            <div class="col-4">
+                                <label for="{{ form.slug.id_for_label }}" class="col-form-label"> Slug </label>
+                            </div>
+                            <div class="col">
+                                {% if form.slug.errors %}                
+                                    {% for error in form.slug.errors %}
+                                        <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                    {% endfor %}                
+                                {% endif %}
+                                {{ form.slug }}
+                            </div>
+                        </div>
+
+                        <div class="form-row  mt-2 align-items-center">
+                            <div class="col-4">
+                                <label for="{{ form.parent.id_for_label }}" class="col-form-label"> Parent Category </label>
+                            </div>
+                            <div class="col">
+                                {% if form.parent.errors %}                
+                                    {% for error in form.parent.errors %}
+                                        <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                    {% endfor %}                
+                                {% endif %}
+                                {{ form.parent }}
+                            </div>
+                        </div>
+
+                    </div>    
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-right">
+                <button class="btn btn-save" type="submit"> Save </button> 
+            </div>    
+        </div>
+        
+    </section>
+</form>
+
+<script type="text/javascript">
+    document.getElementById("id_name").onkeyup = function() {
+        var e = document.getElementById("id_slug");
+        if (!e._changed) { e.value = URLify(document.getElementById("id_name").value, 50); }
+    }
+</script>
+
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,187 @@
+{% extends 'base/base_form_popup.html' %}
+
+
+{% block head_title %}
+    {% if object.pk %} Edit {{ object }} 
+    {% else %} Add a new {{ obj_type }} 
+    {% endif %}
+{% endblock %}
+
+
+{% block content %} 
+
+    <form action="" method="post" enctype="multipart/form-data" class="form form-horizontal">
+
+        {% csrf_token %}
+        {% for field in form.hidden_fields %}
+            {{ field }}
+        {% endfor %}
+
+        <section class="page-heading">
+            <div class="row">    
+                <div class="col text-center">
+                    <h2> 
+                        {% if object.pk %} 
+                            Editing {{ obj_type }} {{ object }} 
+                        {% else %} 
+                            Add a new {{ obj_type|title }} 
+                        {% endif %}
+                    </h2>
+                </div>
+            </div>
+        </section>
+                    
+        {% if form.non_field_errors %}
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card text-white bg-danger">
+                    <div class="card-header">
+                        <strong>Errors</strong>
+                    </div>
+                    <div class="card-body">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+            </div>
+        </div>    
+        {% endif %}
+
+        {% if popup %} 
+                <input type="hidden" name="_popup" value="1">  
+        {% endif %}
+
+        <section class="page-content">
+            
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{{ obj_type|title }} Details</strong>
+                        </div>
+                        <div class="card-body"> 
+                            <div class="form-row align-items-center">
+                                <div class="col-3">
+                                    <label for="{{ form.title.id_for_label }}" class="col-form-label required"> Title </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.title.errors %}                
+                                        {% for error in form.title.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.title }}
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mt-2">
+                                <div class="col-3">
+                                    <label for="{{ form.description.id_for_label }}" class="col-form-label"> Description </label> 
+                                </div>
+                                <div class="col">
+                                    {% if form.description.errors %}                
+                                        {% for error in form.description.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.description }}
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mt-2">
+                                <div class="col-3">
+                                    <label for="{{ form.date_created.id_for_label }}" class="col-form-label required"> Date Created </label> 
+                                </div>
+                                <div class="col">
+                                    {% if form.date_created.errors %}                
+                                        {% for error in form.date_created.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.date_created }}
+                                </div>                                
+                            </div>
+                            <div class="form-row align-items-center mt-2">
+                                <div class="col-3">
+                                    <label for="{{ form.files.id_for_label }}" class="col-form-label"> Files </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.files.errors %}                
+                                        {% for error in form.files.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.files }}
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <strong> Category and Tags </strong>
+                        </div>
+                        <div class="card-body"> 
+                            <div class="form-row align-items-center">
+                                <div class="col-3">
+                                    <label for="{{ form.category.id_for_label }}" class="col-form-label"> Category </label>
+                                </div>
+                                <div class="col">
+                                    {% if form.category.errors %}                
+                                        {% for error in form.category.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.category }}
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center mt-2">
+                                <div class="col-3">
+                                    <label for="{{ form.tags.id_for_label }}" class="col-form-label"> Tags </label> 
+                                </div>
+                                <div class="col">
+                                    {% if form.tags.errors %}                
+                                        {% for error in form.tags.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.tags }} 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <label for="{{ form.content.id_for_label }}" class="col-form-label required"> Content </label>
+                        </div>
+                        <div class="card-body form-textarea"> 
+                            <div class="form-row align-items-center">
+                                <div class="col">
+                                    {% if form.content.errors %}                
+                                        {% for error in form.content.errors %}
+                                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                                        {% endfor %}                
+                                    {% endif %}
+                                    {{ form.content }}
+                                </div>                                
+                            </div>                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col text-right">
+                    <button class="btn btn-save" type="submit"> Save </button> 
+                </div>    
+            </div> 
+        </section>       
+        
+    </form>
+
+{% endblock %}
+
+

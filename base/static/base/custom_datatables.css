@@ -1,0 +1,105 @@
+/*--------------------------------------------------------------
+# Datatables customization
+--------------------------------------------------------------*/
+
+button.dt-button, div.dt-button, a.dt-button, input.dt-button {
+    background: #0c4744;
+    color: #fff
+}
+
+button.dt-button:hover:not(.disabled), 
+div.dt-button:hover:not(.disabled), 
+a.dt-button:hover:not(.disabled), 
+input.dt-button:hover:not(.disabled) {
+    background: #20b2aa;
+    color: #fff
+}
+
+button.dt-button:active:not(.disabled), 
+div.dt-button:active:not(.disabled), 
+a.dt-button:active:not(.disabled), 
+input.dt-button:active:not(.disabled) {
+    background-color: #20b2aa;
+    background: #20b2aa;
+    color: #fff
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #0c4744;
+}
+
+button.dt-button span.dt-down-arrow,
+div.dt-button span.dt-down-arrow,
+a.dt-button span.dt-down-arrow,
+input.dt-button span.dt-down-arrow {
+  color: #fff;
+}
+
+.page-item.active .page-link {
+    background-color: #20b2aa;
+    border: 1px solid #20b2aa;
+}
+
+div.dt-button-collection button.dt-button:active:not(.disabled), 
+div.dt-button-collection button.dt-button.active:not(.disabled), 
+div.dt-button-collection div.dt-button:active:not(.disabled), 
+div.dt-button-collection div.dt-button.active:not(.disabled), 
+div.dt-button-collection a.dt-button:active:not(.disabled), 
+div.dt-button-collection a.dt-button.active:not(.disabled) {
+    background: #79d0cc;
+}
+
+button:focus:not(.disabled), 
+div.dt-button:focus:not(.disabled), 
+a.dt-button:focus:not(.disabled), 
+input.dt-button:focus:not(.disabled) {
+    border: 1px solid #426c9e;
+    text-shadow: 0 1px 0 #c4def1;
+    background-color: #20b2aa;
+    background: linear-gradient(to bottom, #a5e0dd 0%, #62c9c3 100%) !important;
+}
+
+button.dt-button.active:focus:not(.disabled), 
+div.dt-button.active:focus:not(.disabled), 
+a.dt-button.active:focus:not(.disabled), 
+input.dt-button.active:focus:not(.disabled) {
+    background: linear-gradient(to bottom, #a5e0dd 0%, #62c9c3 100%) !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #32627b;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #198e88;
+    color: #fff !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #0c4744;
+    color: #fff !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #198e88;
+}
+
+.dataTables_wrapper .dataTables_length, 
+.dataTables_wrapper .dataTables_filter, 
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_processing, 
+.dataTables_wrapper .dataTables_paginate {
+    color:#20b2aa;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    color: #20b2aa !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+    color: #20b2aa !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #20b2aa !important;
+}

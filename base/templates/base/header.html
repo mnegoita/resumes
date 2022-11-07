@@ -1,0 +1,60 @@
+<header id="header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                
+                <div class="logo float-left">
+                    <h1 class="text-light"><a href="#"><span> Resumes </span></a></h1>
+                </div>
+
+                <nav class="nav-menu d-none d-lg-block">
+                    <ul>                         
+                        <li class="{% if 'home' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'base:home' %}"> Home </a>
+                        </li>
+                        <li class="{% if 'jobposition' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:jobposition_list' %}"> Job Positions </a>
+                        </li>
+                        <li class="{% if 'resume' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:resume_list' %}"> Resumes </a>
+                        </li>
+                        <li class="{% if 'interview' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:interview_list' %}"> Interviews </a>
+                        </li>
+                        <li class="{% if 'company' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:company_list' %}"> Companies </a>
+                        </li>
+                        <li class="{% if 'location' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:location_list' %}"> Locations </a>
+                        </li>
+                        <li class="{% if 'jobtype' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'resumes:jobtype_list' %}"> Job Type </a>
+                        </li>
+                        <li class="{% if 'category' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'base:category_list' %}"> Categories </a>
+                        </li>
+                        <li class="{% if 'tag' in request.resolver_match.url_name %}active{% endif %}">
+                            <a href="{% url 'base:tag_list' %}"> Tags </a>
+                        </li> 
+                                                  
+                    </ul>
+                                        
+                    <div class="search-form header-search-form">
+                        <form action="{% url 'base:search' %}" method="get" role="search">
+                            <input type="text" name="q" placeholder="Search">
+                            <button type="submit"><i class="icofont-search"></i></button>
+                        </form>
+                    </div>
+                    
+                    <div class="hello-login">
+                        <a href="{% url 'users:logout' %}?next={{ request.path }}"> Log Out </a>
+                    </div>
+                    
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</header>
+
+
