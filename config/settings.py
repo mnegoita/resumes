@@ -173,3 +173,5 @@ CKEDITOR_CONFIGS = {
 LOGIN_URL = '/users/login/'
 
 VERSION = 'v2'
+
+CSRF_TRUSTED_ORIGINS = []
